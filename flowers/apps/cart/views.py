@@ -1,9 +1,12 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
+from django.views.generic import ListView
 
 from apps.cart.cart import Cart
 from apps.cart.forms import CartAddProductForm
 from apps.catalog.models import Products
+from apps.orders.models import Order
 
 
 @require_POST
@@ -31,3 +34,17 @@ def cart_detail(request):
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
     return render(request, 'cart/detail.html', {'cart': cart})
+
+
+class MoreInfo(ListView):
+    model = Order
+    template_name = 'cart/history-orders.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = {'title': 'История заказов'}
+        orders = Order.objects.filter(user_id=self.request.user.id).order_by('created')[:20]
+        paginator = Paginator(orders, 10)
+        page_number = self.request.GET.get('page', 1)
+        context['posts'] = paginator.page(page_number)
+        context['orders'] = paginator.get_page(page_number)
+        return context
