@@ -26,9 +26,11 @@
                         <p>{{ i.title }}</p>
                         <p>{{ i.price }} рублей</p>
                         {% if user.is_authenticated %}
-                        <form action="{% url 'cart_add' i.id %}" method="post" class="product_cart">
-                            {{ cart_product_form }}
+                            <form action="{% url 'cart_add' i.id %}" method="post" class="product_cart">
                             {% csrf_token %}
+                                <div>
+                                    {{ cart_product_form }}
+                                </div>
                             <button class="btn-catalog" type="submit" style='margin-left:30px'>В корзину</button>
                         </form>
                         {% else %}
@@ -53,8 +55,7 @@
     {% include 'catalog/paginator.html' with page=posts %}
 </div>
 <script type="text/javascript">
-    function destroy()
-    {
+    function destroy() {
         return confirm("Bы уверены, что хотите уничтожить свой аккаунт?");
     }
 </script>

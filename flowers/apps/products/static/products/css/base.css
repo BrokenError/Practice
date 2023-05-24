@@ -442,6 +442,13 @@ main{
     gap: 70px;
 }
 
+.quantity{
+    margin-left: 5px;
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
 .products_case:hover{
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
     border-radius: 12px;
