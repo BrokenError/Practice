@@ -18,11 +18,11 @@ class Profile(models.Model):
 
 
 @receiver(post_save, sender=User)
-def create_user_profile(instance, created):
+def create_user_profile(instance, created,  **kwargs):
     if created:
         Profile.objects.create(username=instance)
 
 
 @receiver(post_save, sender=User)
-def save_user_profile(instance):
+def save_user_profile(instance, **kwargs):
     instance.profile.save()

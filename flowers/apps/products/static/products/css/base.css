@@ -736,6 +736,10 @@ td a:hover{
     box-shadow: 0 0 5px rgba(217, 222, 211, 0.52);
 }
 
+.pagination{
+    margin-top: 20px;
+}
+
 th, td{
     padding: 10px;
 }

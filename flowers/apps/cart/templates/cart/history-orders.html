@@ -9,6 +9,7 @@
             <a href="{% url 'cart_detail' %}"><li>Корзина</li></a>
             <a href=""><li class="categoies_selected">История заказов</li></a>
         </ul>
+    {% if orders|length > 0 %}
         <div class="hist-table">
         <table>
             <tr>
@@ -41,4 +42,10 @@
         </table>
         </div>
     </div>
+    {% else %}
+        <div class="cart_zero-items">
+            <p>Корзина пуста</p>
+        </div>
+    {% endif %}
+    {% include 'catalog/paginator.html' with page=posts %}
 {% endblock %}
