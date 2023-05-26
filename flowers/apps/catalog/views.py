@@ -5,7 +5,7 @@ from django.views.generic import ListView
 
 from apps.cart.forms import CartAddProductForm
 from apps.products.forms import LoginUserForm
-from .models import Categories, Products
+from .models import Categories, Products, Rating
 
 context = {
     'form': LoginUserForm,
@@ -48,3 +48,4 @@ def show_categories(request, slug):
     context['prod'] = Products.objects.filter(cat=cater.id)
     context['cat_selected'] = cater.id
     return render(request, 'catalog/catalog.html', context=context)
+
