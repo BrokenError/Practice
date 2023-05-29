@@ -4,12 +4,12 @@
 {% block title%}Корзина покупок{% endblock %}
 
 {% block content %}
-    {% if cart|length > 0 %}
     <div class="cart-main__blocks">
         <ul class="user-links cart-nav__menu">
             <a href=""><li class="categoies_selected">Корзина</li></a>
             <a href="{% url 'history' %}"><li>История заказов</li></a>
         </ul>
+        {% if cart|length > 0 %}
         <div class="cart">
             <div class="cart-items">
                 {% for item in cart %}
@@ -53,7 +53,7 @@
         </div>
     </div>
     {% else %}
-        <div class="cart_zero-items">
+        <div class="cart_zero-items" style="min-width: 800px; margin: 0 auto">
             <p>Корзина пуста</p>
         </div>
     {% endif %}

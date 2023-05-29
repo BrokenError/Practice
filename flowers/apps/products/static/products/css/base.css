@@ -702,7 +702,7 @@ main{
     opacity: 60%;
     font-size: 30px;
     display: flex;
-    align-items: center;
+    justify-content: center;
     height: 80%;
 }
 
@@ -836,4 +836,11 @@ td a:hover{
 
 th, td{
     padding: 10px;
+    vertical-align: baseline;
 }
+
+.pressed{
+    color: #DD914B;
+}
+
+input[type='radio'] {display: none}

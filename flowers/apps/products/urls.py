@@ -6,8 +6,8 @@ urlpatterns = [
     path('', LoginUser.as_view(), name='magazine_home'),
     path('aboutus/', about_us, name='about'),
     path('catalog/', include('apps.catalog.urls')),
+    path('user/', include('apps.user.urls')),
     path('<slug:prod_slug>/', show_product, name='product'),
     path('give-grade', grade_product, name='give_grade'),
     path('cart/', include('apps.cart.urls')),
-    path('user/', include('apps.user.urls')),
 ]

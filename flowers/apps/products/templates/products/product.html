@@ -15,8 +15,7 @@
                 </div>
                 <div class="product__body">
                     <div class="product-description">
-                        <p> {{ product.description }} ----------------------------------------------
-                        ------------------------------------------------------------------------------------------------ </p>
+                        <p> {{ product.description }}</p>
                     </div>
                     <div class="product_another">
                         <form action="{% url 'like' %}" method="get" class="product_cart">
@@ -35,23 +34,30 @@
                         </div>
                     </div>
                     <div class="prod_case__footer">
-                        <p style="font-weight: 500; font-size: 18px; padding-top: 5px">{{ product.price }} ₽</p>
-                        <form action="{% url 'cart_add' product.id %}" method="post" class="product_cart">
-                            <div style="display: none">
-                                {{ cart_product_form }}
-                                {% csrf_token %}
+                        <form action="{% url 'cart_add' product.id %}" method="post"
+                              style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;">
+                            <div class="product_cart">
+                                <p style="font-weight: 500; font-size: 18px; padding-top: 5px">{{ product.price }} ₽</p>
+                                <div>
+                                    {{ cart_product_form }}
+                                    {% csrf_token %}
+                                </div>
                             </div>
                             <button class="btn-catalog" type="submit">Купить</button>
                         </form>
                     </div>
                     <div>
                         {% if product_paid %}
-                        <form action="{% url 'give_grade' %}" method="get" class="">
-                            <label><input type="radio" value="1 {{ product.id }}" name="grade_product" onclick="this.form.submit()"></label>
-                            <label><input type="radio" value="2 {{ product.id }}" name="grade_product" onclick="this.form.submit()"></label>
-                            <label><input type="radio" value="3 {{ product.id }}" name="grade_product" onclick="this.form.submit()"></label>
-                            <label><input type="radio" value="4 {{ product.id }}" name="grade_product" onclick="this.form.submit()"></label>
-                            <label><input type="radio" value="5 {{ product.id }}" name="grade_product" onclick="this.form.submit()"></label>
+                        <form action="{% url 'give_grade' %}" method="get">Поставьте оценку товару:
+                            {% for i in star %}
+                                {% if i <= stars %}
+                                    <label><input type="radio" value="{{ i }} {{ product.id }}" name="grade_product"
+                                            onclick="this.form.submit()"><span class="fa fa-star pressed"></span></label>
+                                {% else %}
+                                    <label><input type="radio" value="{{ i }} {{ product.id }}" name="grade_product"
+                                            onclick="this.form.submit()"><span class="fa fa-star"></span></label>
+                                {% endif %}
+                            {% endfor %}
                         </form>
                         {% endif %}
                     </div>
@@ -74,4 +80,5 @@
         comments
     </div>
 </div>
+
 {% endblock %}
