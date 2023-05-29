@@ -1,7 +1,7 @@
 from django.urls import path
 
 from apps.user.views import ChangePassword, RegisterUser, logout_user, delete_account, \
-    user_personal, user_security, verify_code
+    user_personal, user_security, verify_code, user_like
 
 urlpatterns = [
     path('', ChangePassword.as_view(), name='user'),
@@ -11,4 +11,5 @@ urlpatterns = [
     path('security/', user_security, name='security'),
     path('personal/', user_personal, name='personal'),
     path('verify/', verify_code, name='verify'),
+    path('like/', user_like, name='like'),
 ]

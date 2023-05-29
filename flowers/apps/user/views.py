@@ -116,3 +116,11 @@ def delete_account(request):
         return messages.error(request, "Пользователь не найден")
     except Exception:
         raise Http404
+
+
+# TODO implement a like system
+def user_like(request):
+    like = request.GET.get('like_ok')
+    print(like)
+    ...
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

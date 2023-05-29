@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from apps.catalog.models import Products
+from apps.products.models import Products
 
 
 class Order(models.Model):
@@ -28,7 +28,7 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField('Количество', default=1)
 
     def __str__(self):
-        return '{} {}шт {}₽'.format(self.product, self.quantity, self.price)
+        return '{} {} {}шт {}₽'.format(self.id, self.product.title, self.quantity, self.price)
 
     def get_cost(self):
         return self.price * self.quantity

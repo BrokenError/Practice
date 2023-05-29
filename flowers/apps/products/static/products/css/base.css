@@ -2,6 +2,9 @@ html{
     height: 100%;
 }
 
+p{
+    margin: 0;
+}
 
 body{
     margin: 0;
@@ -431,7 +434,11 @@ main{
     font-weight:500;
 }
 
-
+.product{
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .products{
     width: 100%; 
@@ -460,13 +467,37 @@ main{
 .products_case{
     padding: 10px;
     width: 350px;
-    height: 480px;
+    height: 430px;
+}
+
+.product_under-image{
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.prod_case__footer{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+    width: 95%;
+    justify-content: space-between;
 }
 
 .product_cart{
+    margin: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap:15px;
+}
+
+.product_another{
+    padding-top: 5px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product_cart select{
@@ -475,11 +506,66 @@ main{
     background: transparent;
 }
 
-.btn-catalog{
-    font-size: 20px;
-    padding: 10px 30px;
+
+.product-info{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
+.product-image{
+    width: 400px;
+}
+
+.product_case{
+    max-width: 900px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+    border-radius: 20px;
+}
+
+
+.product__body{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.comments-review{
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+}
+
+.comments-review div{
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+}
+
+.comments-review p{
+    padding: 10px;
+}
+
+.btn-catalog{
+    height: 40px;
+    font-size: 20px;
+    padding: 0px 10px;
+}
+
+.none_a{
+    text-decoration: none;
+}
+
+.none_a:hover{
+    text-decoration: none;
+    transform: none;
+    color: black;
+}
 
 .user-info{
     display: flex;
@@ -616,7 +702,7 @@ main{
     opacity: 60%;
     font-size: 30px;
     display: flex;
-    align-items: center;
+    justify-content: center;
     height: 80%;
 }
 
@@ -750,4 +836,11 @@ td a:hover{
 
 th, td{
     padding: 10px;
+    vertical-align: baseline;
 }
+
+.pressed{
+    color: #DD914B;
+}
+
+input[type='radio'] {display: none}

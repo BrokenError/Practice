@@ -1,0 +1,84 @@
+{% extends 'products/base.html' %}
+{% load static %}
+{% block title %}{{ prod_name }}{% endblock %}
+
+{% block content %}
+<div class="main">
+    <div>
+        <div class="product__header">
+            <h2>{{ product.title }}</h2>
+        </div>
+        <div class="product-info">
+            <div class="product_case">
+                <div class="product-image">
+                    <img style="width: 400px; height: 400px;" src="{{ product.photo.url }}" alt="">
+                </div>
+                <div class="product__body">
+                    <div class="product-description">
+                        <p> {{ product.description }}</p>
+                    </div>
+                    <div class="product_another">
+                        <form action="{% url 'like' %}" method="get" class="product_cart">
+                            <div style="display: flex; flex-direction: row;
+                                     gap: 20px; justify-content: left; padding-top: 5px">
+                                {% if stars > 0 %}<p style="font-weight: 700">{{ stars }}/5</p>
+                                {% else %}<p style="font-weight: 200">нет отзывов</p>
+                                {% endif %}
+                                <button class="click_heart" type="submit" id="{{ product.id }}" style="background-color: transparent; color: black">
+                                    <label><input name="like_ok" value="{{ product.id }}" style="display: none"></label>
+                                    <i class="fa-regular fa-heart" style="font-size: 25px"></i></button>
+                            </div>
+                        </form>
+                        <div class="product_under-image" style="margin: 0">
+                            <p style="font-size: 14px">Код товара: {{ product.id }}</p>
+                        </div>
+                    </div>
+                    <div class="prod_case__footer">
+                        <form action="{% url 'cart_add' product.id %}" method="post"
+                              style="display: flex; flex-direction: row; justify-content: space-between; width: 100%;">
+                            <div class="product_cart">
+                                <p style="font-weight: 500; font-size: 18px; padding-top: 5px">{{ product.price }} ₽</p>
+                                <div>
+                                    {{ cart_product_form }}
+                                    {% csrf_token %}
+                                </div>
+                            </div>
+                            <button class="btn-catalog" type="submit">Купить</button>
+                        </form>
+                    </div>
+                    <div>
+                        {% if product_paid %}
+                        <form action="{% url 'give_grade' %}" method="get">Поставьте оценку товару:
+                            {% for i in star %}
+                                {% if i <= stars %}
+                                    <label><input type="radio" value="{{ i }} {{ product.id }}" name="grade_product"
+                                            onclick="this.form.submit()"><span class="fa fa-star pressed"></span></label>
+                                {% else %}
+                                    <label><input type="radio" value="{{ i }} {{ product.id }}" name="grade_product"
+                                            onclick="this.form.submit()"><span class="fa fa-star"></span></label>
+                                {% endif %}
+                            {% endfor %}
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="comments-review">
+                        <div>
+                            <p>Отзывы</p>
+                        </div>
+                        <div>
+                            <p>Комментарии</p>
+                        </div>
+                        <div>
+                            <p>Вопросы</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="user-comments">
+        comments
+    </div>
+</div>
+
+{% endblock %}
