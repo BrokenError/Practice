@@ -5,8 +5,8 @@ from django.views.generic import ListView
 
 from apps.cart.cart import Cart
 from apps.cart.forms import CartAddProductForm
-from apps.products.models import Products
 from apps.orders.models import Order
+from apps.products.models import Products
 
 
 @require_POST

@@ -31,21 +31,9 @@ class Products(models.Model):
         index_together = (('id', 'slug'),)
 
 
-class RatingStar(models.Model):
-    value = models.SmallIntegerField('Значение', default=0)
-
-    def __str__(self):
-        return '{}'.format(self.value)
-
-    class Meta:
-        verbose_name = 'Звезда рейтинга'
-        verbose_name_plural = 'Звезды рейтинга'
-        ordering = ['-value']
-
-
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user')
-    star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name='star')
+    star = models.SmallIntegerField(verbose_name='star')
     prod = models.ForeignKey(Products, on_delete=models.CASCADE, verbose_name='prod')
 
     def __str__(self):
@@ -55,3 +43,19 @@ class Rating(models.Model):
         verbose_name = 'Рейтинг'
         verbose_name_plural = 'Рейтинга'
         ordering = ['prod', '-star']
+
+
+class Reviews(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField("Название", max_length=100)
+    text = models.TextField('Сообщение', max_length=5000)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    date_created = models.DateTimeField('Дата появления товара', auto_now_add=True)
+    date_update = models.DateTimeField('Дата появления товара', auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user} {self.name} {self.text} {self.product}'
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"

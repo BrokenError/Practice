@@ -1,6 +1,6 @@
 from django.urls import path, include
-from apps.cart.views import cart_detail, cart_add, cart_remove, MoreInfo
 
+from apps.cart.views import cart_detail, cart_add, cart_remove, MoreInfo
 
 urlpatterns = [
     path('', cart_detail, name='cart_detail'),

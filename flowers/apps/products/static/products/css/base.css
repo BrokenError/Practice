@@ -481,7 +481,7 @@ main{
     display: flex;
     flex-direction: row;
     gap:20px;
-    width: 95%;
+    width: 100%;
     justify-content: space-between;
 }
 
@@ -518,17 +518,22 @@ main{
 }
 
 .product_case{
-    max-width: 900px;
+    width: 800px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
     padding: 20px;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
     border-radius: 20px;
 }
 
+form{
+    margin: 0;
+}
 
 .product__body{
+    width: 100%;
+    padding: 0 20px;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -844,3 +849,65 @@ th, td{
 }
 
 input[type='radio'] {display: none}
+
+
+.comments_header{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.comment-block{
+    width: 750px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.comments__header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.reply-comments_hidden{
+    display: none;
+}
+
+.reply-comments_visible{
+    display: flex;
+    flex-direction: row;
+}
+
+.comments-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.comments-buttons button:first-child {
+    border: none;
+    background-color: transparent;
+    color: rgba(145, 214, 107, 0.8);
+}
+.comments-buttons button:last-child {
+    border: none;
+    background-color: transparent;
+    color: #DD914B;
+    opacity: 0.95;
+}
+
+.reply-comments_add{
+    display: flex;
+    flex-direction: column;
+}
+
+.fa-chevron-up, .fa-chevron-down{
+    padding: 5px;
+}
+
+
+.reply-comments_add textarea{
+    width: 500px;
+    border-radius: 10px;
+    padding: 15px;
+}
