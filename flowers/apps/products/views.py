@@ -5,7 +5,7 @@ from django.views import View
 from django.views.generic import DetailView
 
 from apps.cart.forms import CartAddProductForm
-from apps.orders.models import Order
+from apps.orders.models import Order, OrderItem
 from apps.products.forms import ReviewForm
 from apps.products.models import Products, Rating, Reviews
 
@@ -23,18 +23,15 @@ class ShowProduct(DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ShowProduct, self).get_context_data(**kwargs)
         product = get_object_or_404(Products, slug=self.kwargs['prod_slug'])
-        user_orders = list(Order.objects.filter(user_id=self.request.user.id))
+        user_orders = Order.objects.filter(user_id=self.request.user.id)
         context['stars'] = Rating.objects.filter(prod=product.id).aggregate(Avg('star')).get('star__avg')
-        orderitems_id = []
         context['product_paid'] = False
-        for order in user_orders:
-            for order_item in list(order.linkorder.all()):
-                orderitems_id.append(order_item.product_id)
-        if product.id in orderitems_id and not \
-                Reviews.objects.filter(user=self.request.user.id, product=product.id).exists():
+        check_buy = user_orders.filter(linkorder__product_id=product.id)
+        check_not_review = not Reviews.objects.filter(user=self.request.user.id, product=product.id).exists()
+        if check_buy:
             context['product_paid'] = True
-        context.update({'product': product, 'comments': Reviews.objects.filter(product=product),
-                        'star': [1, 2, 3, 4, 5], 'cart_product_form': CartAddProductForm()})
+        context.update({'product': product, 'comments': Reviews.objects.filter(product=product), 'star': [1, 2, 3, 4, 5],
+                        'cart_product_form': CartAddProductForm(), 'check_not_review': check_not_review})
         return context
 
 

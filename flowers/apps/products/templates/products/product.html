@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-        {% if product_paid %}
+        {% if product_paid and check_not_review %}
             <div style="border-top: 1px solid rgba(0,0,0, 0.25); padding-bottom: 20px">
             <p style="margin-top: 10px">Вы купили этот товар. Оставьте нам свой отзыв</p>
             <form action="{% url 'review' product.id %}" method="post" style="display: flex; flex-direction: column;
