@@ -37,4 +37,3 @@ class AddPhone(forms.ModelForm):
 
 class VerifyForm(forms.Form):
     code = forms.CharField(max_length=8, required=True, help_text='Введите смс, отправленное на ваш телефон')
-

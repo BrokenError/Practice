@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from phonenumber_field.modelfields import PhoneNumberField
 
+from apps.products.models import Products, Reviews
+
 
 class Profile(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE)
