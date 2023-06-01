@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from apps.products.models import Products
+from apps.products.models import Products, Reviews, Comments
 
 
 @admin.register(Products)
@@ -17,3 +17,16 @@ class ProductsAdmin(admin.ModelAdmin):
         return 'None'
 
     image_show.__name__ = "Картинка"
+
+    
+@admin.register(Reviews)
+class ReviewsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'name', 'text', 'product', 'date_created', 'date_uploaded']
+    list_filter = ['id', 'date_created', 'date_uploaded']
+
+
+@admin.register(Comments)
+class ReviewsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'text', 'product', 'date']
+    list_filter = ['id', 'user']
+    

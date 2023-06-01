@@ -5,9 +5,9 @@ from django.views import View
 from django.views.generic import DetailView
 
 from apps.cart.forms import CartAddProductForm
-from apps.orders.models import Order, OrderItem
-from apps.products.forms import ReviewForm
-from apps.products.models import Products, Rating, Reviews
+from apps.orders.models import Order
+from apps.products.forms import ReviewForm, CommentForm
+from apps.products.models import Products, Rating, Reviews, Comments
 
 
 def about_us(request):
@@ -15,13 +15,11 @@ def about_us(request):
     return render(request, 'products/aboutus.html', context=context)
 
 
-class ShowProduct(DetailView):
-    model = Products
-    template_name = 'products/product.html'
+class BaseProduct(DetailView):
     slug_url_kwarg = 'prod_slug'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(ShowProduct, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         product = get_object_or_404(Products, slug=self.kwargs['prod_slug'])
         user_orders = Order.objects.filter(user_id=self.request.user.id)
         context['stars'] = Rating.objects.filter(prod=product.id).aggregate(Avg('star')).get('star__avg')
@@ -30,8 +28,32 @@ class ShowProduct(DetailView):
         check_not_review = not Reviews.objects.filter(user=self.request.user.id, product=product.id).exists()
         if check_buy:
             context['product_paid'] = True
-        context.update({'product': product, 'comments': Reviews.objects.filter(product=product), 'star': [1, 2, 3, 4, 5],
+        context.update({'product': product, 'star': [1, 2, 3, 4, 5],
                         'cart_product_form': CartAddProductForm(), 'check_not_review': check_not_review})
+        return context
+
+
+class ShowReviewsView(BaseProduct):
+    model = Products
+    template_name = 'products/reviews.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context_new = super(BaseProduct, self).get_context_data(**kwargs)
+        context.update(context_new)
+        context.update({'reviews': Reviews.objects.filter(product=context['product'].id)})
+        return context
+
+
+class ShowCommentsView(BaseProduct):
+    model = Products
+    template_name = 'products/comments.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context_new = super(BaseProduct, self).get_context_data(**kwargs)
+        context.update(context_new)
+        context.update({'comments': Comments.objects.filter(product=context['product'].id)})
         return context
 
 
@@ -47,7 +69,22 @@ def grade_product(request):
 class AddReviews(View):
 
     def post(self, request, pk):
+        print('!!')
         form = ReviewForm(request.POST)
+        product = Products.objects.get(id=pk)
+        if form.is_valid():
+            print('!!!!!!!!!!!!!!!!!!!!!')
+            forme = form.save(commit=False)
+            forme.user = request.user
+            forme.product = product
+            forme.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class AddComments(View):
+
+    def post(self, request, pk):
+        form = CommentForm(request.POST)
         product = Products.objects.get(id=pk)
         if form.is_valid():
             forme = form.save(commit=False)
@@ -55,3 +92,4 @@ class AddReviews(View):
             forme.product = product
             forme.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    

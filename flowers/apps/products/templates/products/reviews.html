@@ -1,0 +1,51 @@
+{% extends 'products/product.html' %}
+{% load static %}
+
+{% block link %}
+    {% if product_paid and check_not_review %}
+    <div>
+        <a class="write-comment_visible" onclick="write_comment()" id="open-write">Написать отзыв</a>
+        <a class="write-comment_hidden" onclick="close_write_comment()" id="close-write">Скрыть</a>
+    </div>
+    {% else %}
+    <div>
+        <a id="open-write" href="#comments" class="selected_link">Просмотреть отзывы</a>
+    </div>
+    {% endif %}
+    <div>
+        <a href="{% url 'product_comments' product.slug %}">Комментарии</a>
+    </div>
+{% endblock %}
+
+{% block review %}
+    {% for i in reviews %}
+    <div class="product_case" id="comments">
+            <div class="comment-block">
+                <div class="comments__header">
+                    <div class="profile_image" style="display: flex; flex-direction: row; align-items: center; gap: 10px">
+                    {% if i.user.user_profile.profile_img %}
+                        <img src="{{ i.user.user_profile.profile_img.url }}" alt="">
+                    {% else %}
+                        <i class="fa-solid fa-user" style=" font-size: 35px"></i>
+                    {% endif %}
+                    {% if i.user.first_name or i.user.last_name %}
+                        <p>{{ i.user.first_name }} {{ i.user.last_name }}</p>
+                    {% else %}
+                        <p>{{ i.user }}</p>
+                    {% endif %}
+                    </div>
+                    <div class="date-message">
+                        {{ i.date_created|date }}
+                        <p>BestFlowers</p>
+                    </div>
+                </div>
+                <div class="comments_name">
+                    {{ i.name }}
+                </div>
+                <div class="comments__body">
+                    {{ i.text }}
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'products/product.html' %}
+{% load static %}
+{% block link %}
+    <div>
+        <a id="open-write" href="{% url 'product' product.slug %}">Просмотреть отзывы</a>
+    </div>
+    <div>
+        <a href="." class="selected_link">Комментарии</a>
+    </div>
+{% endblock %}
+
+{% block review %}
+    <div class="product_case">
+        <form action="{% url 'comment' product.id %}" method="post" class="add-comments">
+            {% csrf_token %}
+            <label><textarea name="text" placeholder="Напишите свое сообщение..."></textarea></label>
+            <button type="submit" class="submit" style="border-radius: 10px">Отправить</button>
+        </form>
+    </div>
+
+    {% for comment in comments %}
+    <div class="product_case" id="comments">
+        <div class="comment-block">
+            <div class="comments__header">
+                <div class="profile_image" style="display: flex; flex-direction: row; align-items: center; gap: 10px">
+                {% if comment.user.user_profile.profile_img %}
+                    <img src="{{ comment.user.user_profile.profile_img.url }}" alt="">
+                {% else %}
+                    <i class="fa-solid fa-user" style=" font-size: 35px"></i>
+                {% endif %}
+                    <div>
+                    {% if comment.user.first_name or comment.user.last_name %}
+                        <p>{{ comment.user.first_name }} {{ comment.user.last_name }}</p>
+                    {% else %}
+                        <p>{{ comment.user }}</p>
+                    {% endif %}
+                        <div class="date-message">{{ comment.date }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="comments__body">
+                {{ comment.text }}
+            </div>
+        </div>
+        <div class="show_reply-comments">
+            <a onclick="open_comments(this.id)"  class="reply-comments_visible" id="open-comments {{ comment.id }}">
+                развернуть ответы <i class="fa-solid fa-chevron-down"></i></a>
+            <a onclick="close_comments(this.id)" class="reply-comments_hidden" id="close-comments {{ comment.id }}">
+                свернуть ответы <i class="fa-solid fa-chevron-up"></i></a>
+        </div>
+        <div class="reply-comments_hidden" id="window-comments {{ comment.id }}" style="flex-direction: column; gap:30px">
+            {% for reply_comment in comment.review.all %}
+            <div style="display: flex; flex-direction: column; align-items: baseline; gap: 20px">
+                <div style="display: flex; flex-direction: column; align-items: center; gap:10px">
+                    <div style="display: flex; flex-direction: row; gap: 15px; align-items: center">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                        <div class="reply-comments_block" style="gap: 10px; display: flex; flex-direction: column">
+                            <div class="profile_image" style="display: flex; flex-direction: row;
+                            align-items: center; gap: 10px">
+                            {% if reply_comment.user.user_profile.profile_img %}
+                                <img src="{{ reply_comment.user.user_profile.profile_img.url }}" alt="">
+                            {% else %}
+                                <i class="fa-solid fa-user" style=" font-size: 35px"></i>
+                            {% endif %}
+                                <div style="display: flex; align-items: flex-start; flex-direction: column">
+                                {% if reply_comment.user.first_name or reply_comment.user.last_name %}
+                                    <p class="response-user">{{ reply_comment.user.first_name }} {{ reply_comment.user.last_name }}</p>
+                                {% else %}
+                                    <p class="response-user">{{ reply_comment.user }}</p>
+                                {% endif %}
+                                    <div class="date-message">{{ reply_comment.date }}</div>
+                                </div>
+                            </div>
+                            {{ reply_comment.text }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="reply-comments__footer">
+                <form method="post" action="{% url 'add_comments' comment.id product.id %}" class="reply-comments__form">
+                    {% csrf_token %}
+                    <label><textarea name="text" placeholder="Введите текст комментария..."></textarea></label>
+                    <button type="submit" style="border-radius: 10px">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+<script src="{% static 'products/js/reply-comments.js' %}"></script>
+{% endblock %}
