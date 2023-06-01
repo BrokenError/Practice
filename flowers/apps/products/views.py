@@ -41,7 +41,7 @@ class ShowReviewsView(BaseProduct):
         context = super().get_context_data(**kwargs)
         context_new = super(BaseProduct, self).get_context_data(**kwargs)
         context.update(context_new)
-        context.update({'reviews': Reviews.objects.filter(product=context['product'].id)})
+        context.update({'reviews': Reviews.objects.filter(product=context['product'].id).order_by('-date_uploaded')})
         return context
 
 
@@ -53,7 +53,7 @@ class ShowCommentsView(BaseProduct):
         context = super().get_context_data(**kwargs)
         context_new = super(BaseProduct, self).get_context_data(**kwargs)
         context.update(context_new)
-        context.update({'comments': Comments.objects.filter(product=context['product'].id)})
+        context.update({'comments': Comments.objects.filter(product=context['product'].id).order_by('-date')})
         return context
 
 
@@ -68,12 +68,11 @@ def grade_product(request):
 
 class AddReviews(View):
 
-    def post(self, request, pk):
-        print('!!')
+    @staticmethod
+    def post(request, pk):
         form = ReviewForm(request.POST)
         product = Products.objects.get(id=pk)
         if form.is_valid():
-            print('!!!!!!!!!!!!!!!!!!!!!')
             forme = form.save(commit=False)
             forme.user = request.user
             forme.product = product
@@ -83,13 +82,47 @@ class AddReviews(View):
 
 class AddComments(View):
 
-    def post(self, request, pk):
+    @staticmethod
+    def post(request, pk):
         form = CommentForm(request.POST)
-        product = Products.objects.get(id=pk)
+        product = Products.objects.get(pk=pk)
         if form.is_valid():
             forme = form.save(commit=False)
             forme.user = request.user
             forme.product = product
             forme.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    
+
+
+def delete_review(request, pk):
+    Reviews.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def delete_comment(request, pk):
+    Comments.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def change_review(request, product_id, review_id):
+    change(request, product_id, review_id, Reviews, ReviewForm, 0)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def change(request, product_id, check_id, model, check_form, check_reply):
+    form = check_form(request.POST)
+    form.save(commit=False)
+    check_write = model.objects.filter(id=check_id).filter(product_id=product_id)
+    if check_write.exists() and model == Reviews:
+        check_write.update(text=form.cleaned_data['text'], name=form.cleaned_data['name'])
+    elif check_write.exists() and model == Comments:
+        check_write.update(text=form.cleaned_data['text'])
+    elif check_reply != 0:
+        check_write = check_write.filter(comment_id=check_reply)
+        check_write.update(text=form.cleaned_data['text'])
+    return False
+
+
+def change_comment(request, product_id, comment_id):
+    change(request, product_id, comment_id, Comments, CommentForm, 0)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

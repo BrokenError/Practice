@@ -33,6 +33,14 @@
                     {% else %}
                         <p>{{ i.user }}</p>
                     {% endif %}
+                    {% if i.user.id == user.id %}
+                        <form action="{% url 'delete_review' i.id %}">
+                            <button type="submit" class="delete-write"><i class="fa-solid fa-trash" style="margin: 0 10px 0 20px"></i></button>
+                        </form>
+                        <div>
+                            <a href="#popup_change{{ i.id }}" class="popup-link"><i class="fa-solid fa-pen"></i></a>
+                        </div>
+                    {% endif %}
                     </div>
                     <div class="date-message">
                         {{ i.date_created|date }}
@@ -44,6 +52,31 @@
                 </div>
                 <div class="comments__body">
                     {{ i.text }}
+                </div>
+            </div>
+            <div id="popup_change{{ i.id }}" class="popup">
+                <div class="popup__body">
+                <form method="POST" action="{% url 'change_review' product.id i.id %}">
+                    <div class="popup__content">
+                        <div class="modal-container__signin" style="gap: 10px; padding: 30px 50px">
+                            <div class="modal-signin">
+                                <a href="" class="popup-link modal-signin-selected">Изменение отзыва</a>
+                            </div>
+                            <div class="modal-inputs__signin" style="gap: 10px">
+                            {% csrf_token %}
+                                <label for="name">Заголовок</label>
+                                <input id="name" type="text" required="" name='name' style="border: none;
+                                border-bottom: 1px solid black">
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 5px">
+                                <label for="text">Описание</label>
+                                <textarea id="text" required="" name="text" style="border-color: rgba(1,1,1, 0.45);
+                                border-radius: 10px; width: 100%; max-height: 300px; min-height: 80px"></textarea>
+                            </div>
+                            <button class="btn-catalog" type="submit" style="width: 150px">Отправить</button>
+                        </div>
+                    </div>
+                </form>
                 </div>
             </div>
     </div>

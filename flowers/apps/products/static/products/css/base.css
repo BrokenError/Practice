@@ -1014,3 +1014,13 @@ input[type='radio'] {display: none}
 .add-comments button{
     /*height: 40px;*/
 }
+
+.delete-write{
+    background-color: transparent;
+    color: black;
+    border: none;
+}
+
+.delete-write:hover{
+    color: #DD914B;
+}
