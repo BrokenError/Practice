@@ -34,7 +34,8 @@
                 </td>
                 <td style="display: block">
                     {% for g in i.linkorder.all %}
-                        <p style="font-size: 14px; width: 150px">{{ g }}</p><br>
+                        <p style="font-size: 14px; width: 150px"> {{ g.product.title }} {{ g.quantity }}шт
+                            <script>document.write("" + ({{ g.price }} * {{ g.quantity }}))</script>₽</p><br>
                     {% endfor %}
                 </td>
             </tr>
