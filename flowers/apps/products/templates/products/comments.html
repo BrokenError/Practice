@@ -36,6 +36,14 @@
                     {% endif %}
                         <div class="date-message">{{ comment.date }}</div>
                     </div>
+                    {% if comment.user.id == user.id %}
+                    <form action="{% url 'delete_comment' comment.id %}">
+                        <button type="submit" class="delete-write"><i class="fa-solid fa-trash" style="margin: 0 10px 0 20px"></i></button>
+                    </form>
+                    <div>
+                        <a href="#popup_change{{ comment.id }}" class="popup-link"><i class="fa-solid fa-pen"></i></a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="comments__body">
@@ -70,9 +78,37 @@
                                 {% endif %}
                                     <div class="date-message">{{ reply_comment.date }}</div>
                                 </div>
+                                {% if reply_comment.user.id == user.id %}
+                                <form action="{% url 'delete-reply-comment' reply_comment.id %}">
+                                    <button type="submit" class="delete-write"><i class="fa-solid fa-trash" style="margin: 0 10px 0 20px"></i></button>
+                                </form>
+                                <div>
+                                    <a href="#popup_change_reply{{ reply_comment.id }}" class="popup-link"><i class="fa-solid fa-pen"></i></a>
+                                </div>
+                                {% endif %}
                             </div>
                             {{ reply_comment.text }}
                         </div>
+                    </div>
+                </div>
+                <div id="popup_change_reply{{ reply_comment.id }}" class="popup">
+                    <div class="popup__body">
+                        <form method="POST" action="{% url 'change-reply-comment' product.id comment.id reply_comment.id %}">
+                            <div class="popup__content">
+                                <div class="modal-container__signin" style="gap: 10px; padding: 30px 50px">
+                                    <div class="modal-signin">
+                                        <a href="" class="popup-link modal-signin-selected">Изменение комментария</a>
+                                    </div>
+                                    {% csrf_token %}
+                                    <div style="display: flex; flex-direction: column; gap: 5px">
+                                        <label for="text">Сообщение</label>
+                                        <textarea id="text" required="" name="text" style="border-color: rgba(1,1,1, 0.45);
+                                        border-radius: 10px; width: 100%; max-height: 300px; min-height: 80px"></textarea>
+                                    </div>
+                                    <button class="btn-catalog" type="submit" style="width: 150px">Отправить</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -82,6 +118,26 @@
                     {% csrf_token %}
                     <label><textarea name="text" placeholder="Введите текст комментария..."></textarea></label>
                     <button type="submit" style="border-radius: 10px">Отправить</button>
+                </form>
+            </div>
+        </div>
+        <div id="popup_change{{ comment.id }}" class="popup">
+            <div class="popup__body">
+                <form method="POST" action="{% url 'change_comment' product.id comment.id %}">
+                    <div class="popup__content">
+                        <div class="modal-container__signin" style="gap: 10px; padding: 30px 50px">
+                            <div class="modal-signin">
+                                <a href="" class="popup-link modal-signin-selected">Изменение комментария</a>
+                            </div>
+                            {% csrf_token %}
+                            <div style="display: flex; flex-direction: column; gap: 5px">
+                                <label for="text">Сообщение</label>
+                                <textarea id="text" required="" name="text" style="border-color: rgba(1,1,1, 0.45);
+                                border-radius: 10px; width: 100%; max-height: 300px; min-height: 80px"></textarea>
+                            </div>
+                            <button class="btn-catalog" type="submit" style="width: 150px">Отправить</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

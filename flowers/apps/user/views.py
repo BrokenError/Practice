@@ -11,7 +11,9 @@ from django.views.generic.edit import CreateView
 
 from apps.products.forms import LoginUserForm
 from apps.products.models import Products, Comments
+from apps.products.views import change
 from apps.user.forms import SaveDataUser, SaveDataProfile, AddPhone, RegisterUserForm, ReplyCommentsForm
+from apps.user.models import ReplyComments
 
 context = {
     'title_links_user': [{'link': 'user', 'name': 'Главная'},
@@ -142,3 +144,13 @@ class ReplyCommentsView(View):
             form.comment = comment
             form.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def delete_reply_comment(request, pk):
+    ReplyComments.objects.get(pk=pk).delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def reply_message_change(request, product_id, comment_id, replcomment):
+    change(request, product_id, replcomment, ReplyComments, ReplyCommentsForm, comment_id)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
