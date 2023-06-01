@@ -25,8 +25,8 @@
             <div class="user_security-about">
                 <div>
                     <p>Телефон:</p>
-                {% if user.profile.phoneNumber %}
-                    <p>{{ user.profile.phoneNumber }}</p>
+                {% if user.user_profile.phoneNumber %}
+                    <p>{{ user.user_profile.phoneNumber }}</p>
                 {% else %}
                     <a href="#popup3" class="user_bind-info popup-link">Привязать</a>
                 {% endif %}

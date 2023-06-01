@@ -33,7 +33,11 @@
                             <li><a href="{% url 'cart_detail' %}" style="position:relative"><i class="fa-solid fa-basket-shopping"></i><p class="num_goods">{{ total_items }}</p></a></li>
                         {% endif %}
                 {% endwith %}
-                <li><a href="{% url 'user' %}"><i class="fa-solid fa-user" style="font-size: 32px;"></i></a></li>
+                {% if user.user_profile.profile_img %}
+                    <li><a href="{% url 'user' %}" class="profile_image"><img src="{{ user.user_profile.profile_img.url }}" alt=""></a></li>
+                {% else %}
+                    <li><a href="{% url 'user' %}"><i class="fa-solid fa-user" style="font-size: 32px;"></i></a></li>
+                {% endif %}
             {% else %}
                 <li><a href="#popup" class="popup-link"><i class="fa-solid fa-basket-shopping" style="position:relative"></i></a></li>
                 <li><a href="#popup" class="popup-link"><i class="fa-solid fa-user"></i></a></li>

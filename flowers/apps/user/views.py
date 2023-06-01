@@ -6,10 +6,12 @@ from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic.edit import CreateView
 
 from apps.products.forms import LoginUserForm
-from .forms import SaveDataUser, SaveDataProfile, AddPhone, RegisterUserForm
+from apps.products.models import Products, Comments
+from apps.user.forms import SaveDataUser, SaveDataProfile, AddPhone, RegisterUserForm, ReplyCommentsForm
 
 context = {
     'title_links_user': [{'link': 'user', 'name': 'Главная'},
@@ -76,7 +78,7 @@ def user_personal(request):
     context['cat_selected'] = 'Личные данные'
     if request.method == 'POST':
         form = SaveDataUser(request.POST, instance=request.user)
-        form2 = SaveDataProfile(request.POST, instance=request.user.profile)
+        form2 = SaveDataProfile(request.POST, instance=request.user.user_profile)
         if form.is_valid() and form2.is_valid():
             form.save()
             form2.save()
@@ -87,6 +89,7 @@ def user_personal(request):
 
 
 def user_security(request):
+    context['user'] = User.objects.get(pk=request.user.id)
     context['cat_selected'] = 'Безопасность и вход'
     context['verify'] = AddPhone()
     return render(request, 'user/user-security.html', context=context)
@@ -99,9 +102,9 @@ def logout_user(request):
 
 def verify_code(request):
     if request.method == 'POST':
-        form = AddPhone(request.POST, instance=request.user.profile)
+        form = AddPhone(request.POST, instance=request.user.user_profile)
         if form.is_valid():
-            request.user.profile.is_phone_verified = True
+            request.user.user_profile.is_phone_verified = True
             request.user.save()
             return render(request, 'user/user-security.html', context=context)
     return redirect('magazine_home')
@@ -124,3 +127,18 @@ def user_like(request):
     print(like)
     ...
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class ReplyCommentsView(View):
+
+    def post(self, request, pk_product, pk_comment):
+        form = ReplyCommentsForm(request.POST)
+        product = Products.objects.get(id=pk_product)
+        comment = Comments.objects.get(id=pk_comment)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.product = product
+            form.comment = comment
+            form.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

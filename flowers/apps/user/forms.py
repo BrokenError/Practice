@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from apps.user.models import User, Profile
+from apps.user.models import User, Profile, ReplyComments
 
 
 class RegisterUserForm(UserCreationForm):
@@ -37,3 +37,9 @@ class AddPhone(forms.ModelForm):
 
 class VerifyForm(forms.Form):
     code = forms.CharField(max_length=8, required=True, help_text='Введите смс, отправленное на ваш телефон')
+
+
+class ReplyCommentsForm(forms.ModelForm):
+    class Meta:
+        model = ReplyComments
+        fields = ("text",)

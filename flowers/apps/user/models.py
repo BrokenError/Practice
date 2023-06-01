@@ -4,11 +4,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from phonenumber_field.modelfields import PhoneNumberField
 
-from apps.products.models import Products, Reviews
+from apps.products.models import Products, Reviews, Comments
 
 
 class Profile(models.Model):
-    username = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.OneToOneField(User, related_name='user_profile', on_delete=models.CASCADE)
     bio = models.TextField('О себе', null=True, max_length=1000, blank=True)
     birth_date = models.DateField('День рождение', null=True, blank=True)
     profile_img = models.ImageField('Фото профиля', null=True, blank=True, upload_to="users/profile/")
@@ -27,4 +27,19 @@ def create_user_profile(instance, created,  **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_profile(instance, **kwargs):
-    instance.profile.save()
+    instance.user_profile.save()
+
+
+class ReplyComments(models.Model):
+    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
+    date = models.DateTimeField('Дата ответа', auto_now=True)
+    text = models.TextField('Сообщение', max_length=5000)
+    product = models.ForeignKey(Products, related_name='product', on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comments, related_name='review', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.comment} {self.user} {self.date} {self.text} {self.product}'
+
+    class Meta:
+        verbose_name = "Ответ на комментарий"
+        verbose_name_plural = "Ответы на комментарии"

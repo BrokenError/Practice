@@ -44,7 +44,7 @@
                                         {% csrf_token %}
                                     </div>
                                 </div>
-                                <button class="btn-catalog" type="submit">Купить</button>
+                                <button class="btn-catalog" type="submit" style="border-radius: 10px">Купить</button>
                             </form>
                         </div>
                     {% if product_paid %}
@@ -63,20 +63,13 @@
                         </div>
                     {% endif %}
                         <div class="comments-review">
-                            <div>
-                                <p><a href="#comments">Отзывы</a></p>
-                            </div>
-                            <div>
-                                <p>Комментарии</p>
-                            </div>
-                            <div>
-                                <p>Вопросы</p>
-                            </div>
+                            {% block link %}
+                            {% endblock %}
                         </div>
                     </div>
                 </div>
         {% if product_paid and check_not_review %}
-            <div style="border-top: 1px solid rgba(0,0,0, 0.25); padding-bottom: 20px">
+            <div style="border-top: 1px solid rgba(0,0,0, 0.25); padding-bottom: 20px" id="modal-comment" class="write-comment_hidden">
             <p style="margin-top: 10px">Вы купили этот товар. Оставьте нам свой отзыв</p>
             <form action="{% url 'review' product.id %}" method="post" style="display: flex; flex-direction: column;
              gap: 20px">
@@ -98,21 +91,8 @@
         </div>
     </div>
     </div>
-    {% for i in comments %}
-    <div class="product_case" id="comments">
-            <div class="comment-block">
-                <div class="comments__header">
-                    <div>{{ i.user }}</div>
-                    <div>{{ i.date_created }}</div>
-                </div>
-                <div class="comments_name">
-                    {{ i.name }}
-                </div>
-                <div class="comments__body">
-                    {{ i.text }}
-                </div>
-            </div>
-    </div>
-    {% endfor %}
+    {% block review %}
+    {% endblock %}
 </div>
+<script src="{% static 'products/js/write-review.js' %}"></script>
 {% endblock %}
