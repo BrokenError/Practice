@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from apps.user.models import User, Profile, ReplyComments
+from apps.user.models import User, Profile, ReplyComments, UserLike
 
 
 class RegisterUserForm(UserCreationForm):

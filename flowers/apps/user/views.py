@@ -13,7 +13,7 @@ from apps.products.forms import LoginUserForm
 from apps.products.models import Products, Comments
 from apps.products.views import change
 from apps.user.forms import SaveDataUser, SaveDataProfile, AddPhone, RegisterUserForm, ReplyCommentsForm
-from apps.user.models import ReplyComments
+from apps.user.models import ReplyComments, UserLike
 
 context = {
     'title_links_user': [{'link': 'user', 'name': 'Главная'},
@@ -123,11 +123,11 @@ def delete_account(request):
         raise Http404
 
 
-# TODO implement a like system
 def user_like(request):
     like = request.GET.get('like_ok')
-    print(like)
-    ...
+    obj, create = UserLike.objects.get_or_create(user=request.user, product_id=like)
+    if not create:
+        obj.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

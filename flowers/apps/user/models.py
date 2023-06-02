@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -43,3 +45,13 @@ class ReplyComments(models.Model):
     class Meta:
         verbose_name = "Ответ на комментарий"
         verbose_name_plural = "Ответы на комментарии"
+
+
+class UserLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, related_name='check_like', on_delete=models.CASCADE)
+    date = models.DateTimeField('Дата ответа')
+
+    def save(self, *args, **kwargs):
+        self.date = timezone.now()
+        return super(UserLike, self).save(*args, **kwargs)

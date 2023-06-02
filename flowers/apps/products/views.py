@@ -1,6 +1,7 @@
 from django.db.models import Avg
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.template.defaulttags import register
 from django.views import View
 from django.views.generic import DetailView
 
@@ -8,6 +9,7 @@ from apps.cart.forms import CartAddProductForm
 from apps.orders.models import Order
 from apps.products.forms import ReviewForm, CommentForm
 from apps.products.models import Products, Rating, Reviews, Comments
+from apps.user.models import UserLike
 
 
 def about_us(request):
@@ -24,13 +26,19 @@ class BaseProduct(DetailView):
         user_orders = Order.objects.filter(user_id=self.request.user.id)
         context['stars'] = Rating.objects.filter(prod=product.id).aggregate(Avg('star')).get('star__avg')
         context['product_paid'] = False
+        context['check_like'] = product.check_like.filter(user=self.request.user, product=product).exists()
         check_buy = user_orders.filter(linkorder__product_id=product.id)
-        check_not_review = not Reviews.objects.filter(user=self.request.user.id, product=product.id).exists()
+        check_not_review = not product.check_review.filter(user=self.request.user.id).exists()
         if check_buy:
             context['product_paid'] = True
         context.update({'product': product, 'star': [1, 2, 3, 4, 5],
                         'cart_product_form': CartAddProductForm(), 'check_not_review': check_not_review})
         return context
+
+
+@register.filter
+def filter_user(req, user):
+    return req.filter(user=user)
 
 
 class ShowReviewsView(BaseProduct):
