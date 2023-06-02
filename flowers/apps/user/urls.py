@@ -5,7 +5,7 @@ from apps.user.views import ChangePassword, RegisterUser, logout_user, delete_ac
 
 urlpatterns = [
     path('', ChangePassword.as_view(), name='user'),
-    path('<int:pk_comment>/reply-review/<int:pk_product>', ReplyCommentsView.as_view(), name='add_comments'),
+    path('comment/<int:pk_comment>/reply-review/<int:pk_product>', ReplyCommentsView.as_view(), name='add_comments'),
     path('delete-reply-comment/<int:id>', delete_reply_comment, name='delete-reply-comment'),
     path('product/<int:product_id>/comment/<int:comment_id>/<int:replcomment>', reply_message_change,
          name='change-reply-comment'),

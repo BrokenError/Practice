@@ -41,9 +41,16 @@
                                     {% if rating > 0 %}<p style="font-weight: 700">{{ prod_rating|rating:p.id }}/5</p>
                                     {% else %}<p style="font-weight: 200">нет отзывов</p>
                                     {% endif %}
-                                    <button class="click_heart" type="submit" id="{{ p.id }}" style="background-color: transparent; color: black">
+                                    {% if not p.check_like|filter_user:user %}
+                                        <button class="click_heart" type="submit" id="{{ p.id }}" style="background-color: transparent; color: black">
                                         <label><input name="like_ok" value="{{ p.id }}" style="display: none"></label>
                                         <i class="fa-regular fa-heart" style="font-size: 25px"></i></button>
+                                    {% else %}
+                                        <button class="click_heart" type="submit" id="{{ p.id }}"
+                                                style="background-color: transparent; color: #DD914B">
+                                        <label><input name="like_ok" value="{{ p.id }}" style="display: none"></label>
+                                        <i class="fa-solid fa-heart" style="font-size: 25px"></i></button>
+                                    {% endif %}
                                 {% endwith %}
                                 </div>
                             </form>

@@ -31,6 +31,7 @@ class SearchResultView(ListView):
         else:
             object_list = Products.objects.filter(Q(title__icontains=query) or Q(slug__icontains=query))
         context['prod'] = object_list
+        get_rating_catalog(self.request)
         return context
 
 

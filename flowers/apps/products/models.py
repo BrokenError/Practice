@@ -49,7 +49,7 @@ class Reviews(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField("Название", max_length=100)
     text = models.TextField('Сообщение', max_length=5000)
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, related_name='check_review', on_delete=models.CASCADE)
     date_created = models.DateTimeField('Дата появления товара', auto_now_add=True)
     date_uploaded = models.DateTimeField('Дата обновления товара', auto_now=True)
 
