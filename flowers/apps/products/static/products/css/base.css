@@ -830,7 +830,7 @@ form{
 }
 
 .hist-table{
-    max-width: 900px;
+    max-width: 800px;
     padding: 20px 40px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(217, 222, 211, 0.91);
@@ -1023,4 +1023,16 @@ input[type='radio'] {display: none}
 
 .delete-write:hover{
     color: #DD914B;
+}
+
+.liked-block{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.liked__body{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

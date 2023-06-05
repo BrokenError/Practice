@@ -7,6 +7,8 @@ from apps.cart.cart import Cart
 from apps.cart.forms import CartAddProductForm
 from apps.orders.models import Order
 from apps.products.models import Products
+from apps.user.models import UserLike
+from apps.catalog.views import get_rating_catalog
 
 
 @require_POST
@@ -48,3 +50,20 @@ class MoreInfo(ListView):
         context['posts'] = paginator.page(page_number)
         context['orders'] = paginator.get_page(page_number)
         return context
+
+
+class LikedPages(ListView):
+    model = UserLike
+    template_name = 'cart/liked.html'
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['title'] = 'Понравившиеся товары'
+        context['products'] = Products.objects.filter(check_like__user=self.request.user)
+        context.update(get_rating_catalog(self.request, context['products']))
+        paginator = Paginator(context['products'], 20)
+        page_number = self.request.GET.get('page', 1)
+        context['page'] = paginator.page(page_number)
+        context['products'] = paginator.get_page(page_number)
+        return context
+        

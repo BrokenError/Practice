@@ -9,7 +9,6 @@ from apps.cart.forms import CartAddProductForm
 from apps.orders.models import Order
 from apps.products.forms import ReviewForm, CommentForm
 from apps.products.models import Products, Rating, Reviews, Comments
-from apps.user.models import UserLike
 
 
 def about_us(request):

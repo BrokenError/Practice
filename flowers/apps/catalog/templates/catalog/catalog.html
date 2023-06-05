@@ -31,7 +31,7 @@
                                 <p style="font-size: 20px">{{ p.title }}</p>
                                 <p style="font-weight: 500; font-size: 18px">{{ p.price }} ₽</p>
                             </div>
-                        </a>
+                    </a>
                         {% if user.is_authenticated %}
                         <div class="product_another">
                             <form action="{% url 'like' %}" method="get" class="product_cart">
@@ -83,7 +83,6 @@
         {% endfor %}
     </div>
     {% include 'catalog/paginator.html' with page=posts %}
-</div>
 <script type="text/javascript">
     function destroy() {
         return confirm("Bы уверены, что хотите уничтожить свой аккаунт?");

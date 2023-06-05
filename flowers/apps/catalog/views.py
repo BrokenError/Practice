@@ -42,7 +42,7 @@ def magazine_catalog(request):
     page_number = request.GET.get('page', 1)
     context['posts'] = paginator.page(page_number)
     context['prod'] = paginator.get_page(page_number)
-    get_rating_catalog(request)
+    get_rating_catalog(request, context['prod'])
     return render(request, 'catalog/catalog.html', context=context)
 
 
@@ -50,14 +50,15 @@ def show_categories(request, slug):
     cater = get_object_or_404(Categories, slug=slug)
     context['prod'] = Products.objects.filter(cat=cater.id).order_by('date_created')
     context['cat_selected'] = cater.id
-    get_rating_catalog(request)
+    get_rating_catalog(request, context['prod'])
     return render(request, 'catalog/catalog.html', context=context)
 
 
-def get_rating_catalog(request):
+def get_rating_catalog(request, products):
     context['prod_rating'] = {}
-    for i in context['prod']:
-        context["prod_rating"].update({i.id: Rating.objects.filter(prod=i).aggregate(Avg('star')).get('star__avg')})
+    for product in products:
+        context["prod_rating"].update({product.id: Rating.objects.filter(prod=product).
+                                      aggregate(Avg('star')).get('star__avg')})
     return context
 
 
