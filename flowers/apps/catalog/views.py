@@ -56,8 +56,9 @@ def show_categories(request, slug):
 
 def get_rating_catalog(request, products):
     context['prod_rating'] = {}
-    for i in products:
-        context["prod_rating"].update({i.id: Rating.objects.filter(prod=i).aggregate(Avg('star')).get('star__avg')})
+    for product in products:
+        context["prod_rating"].update({product.id: Rating.objects.filter(prod=product).
+                                      aggregate(Avg('star')).get('star__avg')})
     return context
 
 
