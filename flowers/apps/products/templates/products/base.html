@@ -24,6 +24,9 @@
             </ul>
         </nav> 
         <ul class="header_links">
+            {% if user.is_staff %}
+                <li class="hover-link"><a href="{% url 'admin:index' %}">Аналитика</a></li>
+            {% endif %}
             <li><a href="{% url 'search' %}"><i class="fa-solid fa-magnifying-glass"></i></a></li>
             {% if user.is_authenticated %}
                 {% with total_items=cart|length %}

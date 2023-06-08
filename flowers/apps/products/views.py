@@ -62,7 +62,7 @@ class ShowCommentsView(BaseProduct):
         context.update(context_new)
         context.update({'comments': Comments.objects.filter(product=context['product'].id).order_by('-date')})
         return context
-
+    
 
 def grade_product(request):
     grade = request.GET.get('grade_product')

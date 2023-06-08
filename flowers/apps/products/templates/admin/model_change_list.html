@@ -1,0 +1,20 @@
+{% extends 'admin/change_list.html' %}
+{% load i18n %}
+
+{% block object-tools %}
+
+    {{ block.super }}
+
+
+<script type="text/javascript">
+    window.addEventListener('click', filter, false)
+    function filter(e) {
+        if (e.target.tagName === 'A') {
+            e.preventDefault();
+            document.cookie = "title_filter=" + e.target.title;
+            console.log(document.cookie)
+            window.location.href = e.target.href;
+        }
+    }
+ </script>
+{% endblock %}

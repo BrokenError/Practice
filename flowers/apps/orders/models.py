@@ -13,6 +13,8 @@ class Order(models.Model):
 
     class Meta:
         ordering = ('-created',)
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
 
     def __str__(self):
         return '{} {} {} {} {}'.format(self.id, self.description, self.deliv_address, self.created, self.paid)
@@ -32,3 +34,7 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+
+    class Meta:
+        verbose_name = 'Предметы заказа'
+        verbose_name_plural = 'Предметы заказов'

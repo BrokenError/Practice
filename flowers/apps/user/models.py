@@ -20,6 +20,10 @@ class Profile(models.Model):
     is_phone_verified = models.BooleanField(default=False)
     balance = models.DecimalField('Баланс', max_digits=8, decimal_places=2, blank=True, default=0)
 
+    class Meta:
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Профили'
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(instance, created,  **kwargs):

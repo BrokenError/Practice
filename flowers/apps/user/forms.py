@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from apps.user.models import User, Profile, ReplyComments, UserLike
+from apps.user.models import User, Profile, ReplyComments
 
 
 class RegisterUserForm(UserCreationForm):
@@ -16,14 +16,12 @@ class RegisterUserForm(UserCreationForm):
 
 
 class SaveDataUser(forms.ModelForm):
-
     class Meta:
         model = User
         fields = ("first_name", "last_name")
 
 
 class SaveDataProfile(forms.ModelForm):
-
     class Meta:
         model = Profile
         fields = ("bio", "country", "city", "birth_date")

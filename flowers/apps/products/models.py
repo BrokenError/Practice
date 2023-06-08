@@ -17,9 +17,7 @@ class Products(models.Model):
     cat = models.ForeignKey(Categories, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{} {} {} {} {} {} {} {} {}'.format(self.id, self.title, self.slug, self.price, self.description,
-                                                   self.photo, self.available, self.date_created, self.date_uploaded,
-                                                   self.cat)
+        return '{}'.format(self.title)
 
     def get_absolute_url(self):
         return reverse('product', args=[self.slug])
@@ -50,8 +48,8 @@ class Reviews(models.Model):
     name = models.CharField("Название", max_length=100)
     text = models.TextField('Сообщение', max_length=5000)
     product = models.ForeignKey(Products, related_name='check_review', on_delete=models.CASCADE)
-    date_created = models.DateTimeField('Дата появления товара', auto_now_add=True)
-    date_uploaded = models.DateTimeField('Дата обновления товара', auto_now=True)
+    date_created = models.DateTimeField('Дата появления отзыва', auto_now_add=True)
+    date_uploaded = models.DateTimeField('Дата обновления отзыва', auto_now=True)
 
     def __str__(self):
         return f'{self.user} {self.name} {self.text} {self.product}'
