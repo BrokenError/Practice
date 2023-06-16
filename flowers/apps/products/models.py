@@ -32,7 +32,7 @@ class Products(models.Model):
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user')
     star = models.SmallIntegerField(verbose_name='star')
-    prod = models.ForeignKey(Products, on_delete=models.CASCADE, verbose_name='prod')
+    prod = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='stars', verbose_name='prod')
 
     def __str__(self):
         return '{} {}'.format(self.prod, self.star)
@@ -62,7 +62,7 @@ class Reviews(models.Model):
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField('Сообщение', max_length=5000)
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, related_name='check_comment', on_delete=models.CASCADE)
     date = models.DateTimeField('Дата комментария', auto_now=True)
 
     def __str__(self):

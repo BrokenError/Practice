@@ -9,8 +9,8 @@ from apps.products.admin import report_data
 class CategoriesAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'slug', 'date']
     list_display_links = ('id', 'title')
-    prepopulated_fields = {'slug': ('title',)}
     list_filter = ['date']
+    prepopulated_fields = {'slug': ('title',)}
     change_list_template = "admin/model_change_list.html"
     actions = ['get_data']
 

@@ -7,7 +7,7 @@
     <div class="order-main">
     <div class="order-left__head">
         <h6>Заполните данные для оформления заказа:</h6>
-        <form action="." method="post">
+        <form action="{% url 'orders:paid_order' %}" method="post">
         {% csrf_token %}
         <div class="order-form__body">
             {% for f in form %}

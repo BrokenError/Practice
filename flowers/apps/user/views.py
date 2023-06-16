@@ -1,19 +1,18 @@
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, PasswordChangeView
-from django.http import Http404, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.edit import CreateView
 
 from apps.products.forms import LoginUserForm
-from apps.products.models import Products, Comments
-from apps.products.views import change
+from apps.products.services import change_reply_comment
 from apps.user.forms import SaveDataUser, SaveDataProfile, AddPhone, RegisterUserForm, ReplyCommentsForm
-from apps.user.models import ReplyComments, UserLike
+from apps.user.models import ReplyComments
+from apps.user.services import like_product, reply_comment, delete_user
 
 context = {
     'title_links_user': [{'link': 'user', 'name': 'Главная'},
@@ -28,6 +27,7 @@ class RegisterUser(CreateView):
     success_url = ""
 
     def form_valid(self, form):
+        print(form)
         form.save()
         return super(RegisterUser, self).form_valid(form)
 
@@ -37,6 +37,15 @@ class RegisterUser(CreateView):
     def get_success_url(self):
         return reverse_lazy('magazine_home')
 
+
+def verify_code(request):
+    if request.method == 'POST':
+        form = AddPhone(request.POST, instance=request.user.user_profile)
+        if form.is_valid():
+            request.user.user_profile.is_phone_verified = True
+            request.user.save()
+            return render(request, 'user/user-security.html', context=context)
+    return redirect('magazine_home')
 
 class LoginUser(LoginView):
     form_class = LoginUserForm
@@ -84,7 +93,7 @@ def user_personal(request):
         if form.is_valid() and form2.is_valid():
             form.save()
             form2.save()
-            render(request, 'user/user-info.html', context=context)
+            return render(request, 'user/user-info.html', context=context)
         else:
             print('error')
     return render(request, 'user/user-personal.html', context=context)
@@ -102,47 +111,20 @@ def logout_user(request):
     return redirect('magazine_home')
 
 
-def verify_code(request):
-    if request.method == 'POST':
-        form = AddPhone(request.POST, instance=request.user.user_profile)
-        if form.is_valid():
-            request.user.user_profile.is_phone_verified = True
-            request.user.save()
-            return render(request, 'user/user-security.html', context=context)
-    return redirect('magazine_home')
-
-
 def delete_account(request):
-    try:
-        u = User.objects.get(pk=request.user.id)
-        u.delete()
-        return messages.success(request, "Аккаунт успешно удален")
-    except User.DoesNotExist:
-        return messages.error(request, "Пользователь не найден")
-    except Exception:
-        raise Http404
+    return delete_user(request.user.id)
 
 
 def user_like(request):
     like = request.GET.get('like_ok')
-    obj, create = UserLike.objects.get_or_create(user=request.user, product_id=like)
-    if not create:
-        obj.delete()
+    like_product(like, request.user)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class ReplyCommentsView(View):
 
     def post(self, request, pk_product, pk_comment):
-        form = ReplyCommentsForm(request.POST)
-        product = Products.objects.get(id=pk_product)
-        comment = Comments.objects.get(id=pk_comment)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.user = request.user
-            form.product = product
-            form.comment = comment
-            form.save()
+        reply_comment(ReplyCommentsForm(request.POST), self.request.user, pk_product, pk_comment)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -152,5 +134,5 @@ def delete_reply_comment(request, pk):
 
 
 def reply_message_change(request, product_id, comment_id, replcomment):
-    change(request, product_id, replcomment, ReplyComments, ReplyCommentsForm, comment_id)
+    change_reply_comment(product_id, replcomment, ReplyComments, ReplyCommentsForm, comment_id)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

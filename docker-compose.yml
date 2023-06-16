@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  web:
+    container_name: flowers
+    depends_on:
+      - db
+    build: ./flowers
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - '8000:8000'
+    env_file:
+      - .env.dev
+
+  db:
+    image: postgres
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_DATABASE: magazine
+      MYSQL_PASSWORD: 1111
+      MYSQL_ROOT_PASSWORD: 1111
+      MYSQL_PORTS: 3306

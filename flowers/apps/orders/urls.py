@@ -1,5 +1,7 @@
-from django.conf.urls import url
+from django.urls import path
 
-from apps.orders.views import order_create
+from apps.orders.views import create_order_view, paid_order_view
 
-urlpatterns = [url(r'^create/$', order_create, name='order_create'), ]
+urlpatterns = [path('create/', create_order_view, name='order_create'),
+               path('paid-order/', paid_order_view, name='paid_order'),
+               ]

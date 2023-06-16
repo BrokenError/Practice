@@ -1,7 +1,7 @@
 {% extends 'products/base.html' %}
 {% load static %}
 
-{% block title %}Поиск{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
     <div class="main" style="gap:20px">
         <div>
@@ -34,9 +34,10 @@
                                 <div style="display: flex; flex-direction: row;
                                  gap: 20px; justify-content: center; padding-top: 5px">
                                     {% with rating=prod_rating|rating:p.id %}
-                                        {% if rating > 0 %}<p style="font-weight: 700">{{ prod_rating|rating:p.id }}/5</p>
+                                        {% if rating > 0 %}<p style="font-weight: 700">{{ rating }}/5</p>
                                         {% else %}<p style="font-weight: 200">нет отзывов</p>
                                         {% endif %}
+                                    {% endwith %}
                                         {% if not p.check_like|filter_user:user %}
                                             <button class="click_heart" type="submit" id="{{ p.id }}" style="background-color: transparent; color: black">
                                             <label><input name="like_ok" value="{{ p.id }}" style="display: none"></label>
@@ -47,7 +48,6 @@
                                             <label><input name="like_ok" value="{{ p.id }}" style="display: none"></label>
                                             <i class="fa-solid fa-heart" style="font-size: 25px"></i></button>
                                         {% endif %}
-                                    {% endwith %}
                                 </div>
                             </form>
                             <form action="{% url 'cart_add' p.id %}" method="post" class="product_cart">

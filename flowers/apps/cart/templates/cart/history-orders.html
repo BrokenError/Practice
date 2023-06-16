@@ -44,10 +44,10 @@
         </table>
         </div>
     </div>
-    {% else %}
-        <div class="cart_zero-items">
-            <p>Корзина пуста</p>
-        </div>
-    {% endif %}
     {% include 'catalog/paginator.html' with page=posts %}
+    {% else %}
+    <div class="cart_zero-items" style="width: 800px">
+        <p>Корзина пуста</p>
+    </div>
+    {% endif %}
 {% endblock %}

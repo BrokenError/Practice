@@ -14,6 +14,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'deliv_address', 'created', 'description', 'paid']
     list_display_links = ('id', 'created')
     list_filter = ['user', 'created', 'paid']
+    search_fields = ['user', 'deliv_address']
     inlines = [CategoriesAdmin]
     change_list_template = "admin/model_change_list.html"
     actions = ['get_data']

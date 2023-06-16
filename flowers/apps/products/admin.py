@@ -40,6 +40,7 @@ class ProductsAdmin(admin.ModelAdmin):
     list_editable = ['price', 'available']
     list_filter = ['date_created', 'date_uploaded']
     actions = ['get_data']
+    search_fields = ['title']
     prepopulated_fields = {'slug': ('title',)}
     change_list_template = "admin/model_change_list.html"
 
@@ -68,6 +69,7 @@ class ReviewsAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'name', 'text', 'product', 'date_created', 'date_uploaded']
     list_filter = ['date_created', 'date_uploaded']
     actions = ['get_data']
+    search_fields = ['user', 'text']
     change_list_template = "admin/model_change_list.html"
 
     @admin.action(description='Распечатать информацию')
@@ -90,6 +92,7 @@ class ReviewsAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'text', 'product', 'date']
     list_filter = ['user', 'date', 'product']
     actions = ['get_data']
+    search_fields = ['user', 'text']
     change_list_template = "admin/model_change_list.html"
 
     @admin.action(description='Распечатать информацию')
