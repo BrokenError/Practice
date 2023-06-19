@@ -47,6 +47,7 @@ def verify_code(request):
             return render(request, 'user/user-security.html', context=context)
     return redirect('magazine_home')
 
+
 class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'products/main.html'

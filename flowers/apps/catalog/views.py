@@ -24,4 +24,3 @@ def magazine_catalog_view(request):
 def show_categories_view(request, slug):
     context = show_categories(slug)
     return render(request, 'catalog/catalog.html', context=context)
-
