@@ -4,7 +4,6 @@ WORKDIR /usr/src/flowers
 
 ENV PYTHONDONTWRITEDBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV PIP_ROOT_USER_ACTION=ignore
 
 RUN pip install --upgrade pip
 

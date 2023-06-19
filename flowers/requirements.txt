@@ -26,6 +26,7 @@ pathlib==1.0.1
 phonenumbers==8.13.11
 Pillow==9.5.0
 protobuf==3.19.6
+psycopg2-binary==2.9.6
 pycodestyle==2.10.0
 pycparser==2.21
 pyflakes==3.0.1
