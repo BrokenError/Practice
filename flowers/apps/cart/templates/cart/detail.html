@@ -15,9 +15,9 @@
             <div class="cart-items">
                 {% for item in cart %}
                 {% with product=item.product %}
-                    <div class="cart_item">
+                    <div class="cart_item" style="padding: 10px 20px">
                         <div class="cart_img">
-                            <a href=""><img src="{% if product.photo %}{{ product.photo.url }}{% else %}
+                            <a href="/reviews/{{ product.slug }} "><img src="{% if product.photo %}{{ product.photo.url }}{% else %}
                             {% static 'cart/img/no_image.png' %}{% endif %}" class="cart_img" alt=""></a>
                         </div>
                         <div class="cart_item_text">

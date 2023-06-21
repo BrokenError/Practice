@@ -69,9 +69,10 @@
                 {% endif %}
             </div>
         </div>
+    </div>
+    <div style="display: flex; justify-content: center">{% include 'catalog/paginator.html' with page=page %}</div>
     {% empty %}
         <p style="margin: 0 auto;">ЗДЕСЬ ПОКА НИЧЕГО НЕТ</p>
     {% endfor %}
     </div>
-    <div style="display: flex; justify-content: center">{% include 'catalog/paginator.html' with page=page %}</div>
 {% endblock %}

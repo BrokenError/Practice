@@ -1,16 +1,19 @@
+import requests
+from bs4 import BeautifulSoup
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template.defaulttags import register
 from django.views import View
 from django.views.generic import DetailView
 
-from apps.products.forms import ReviewForm, CommentForm
+from apps.products.forms import ReviewForm, CommentForm, LoginUserForm
 from apps.products.models import Products, Reviews, Comments
-from apps.products.services import base_context, grade_product, fill_form, change_review, change_comment
+from apps.products.services import base_context, grade_product, fill_form, change_review, change_comment, \
+    show_our_stores
 
 
 def about_us(request):
-    return render(request, 'products/aboutus.html', context={'title': 'О нас'})
+    return render(request, 'products/aboutus.html', context={'title': 'О нас', 'form': LoginUserForm})
 
 
 class BaseProduct(DetailView):
@@ -66,7 +69,6 @@ class AddComments(View):
 
     @staticmethod
     def post(request, pk):
-        print(CommentForm(request.POST))
         fill_form(CommentForm(request.POST), Products.objects.get(pk=pk), request.user)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -89,3 +91,14 @@ def change_review_view(request, product_id, review_id):
 def change_comment_view(request, product_id, comment_id):
     change_comment(product_id, comment_id, Comments, CommentForm(request.POST))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def our_stores(request):
+    answer = request.COOKIES.get('answer')
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    context = show_our_stores(answer, ip)
+    return render(request, 'products/our_stores.html', context)

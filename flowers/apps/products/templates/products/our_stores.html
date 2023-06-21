@@ -1,0 +1,42 @@
+{% extends 'products/base.html' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+<div id="popup6" class="popup">
+    <div class="popup__body" style="padding: 100px 10px; align-items: flex-start">
+        <div class="popup__block">
+            <p>Вы находитесь в {{ location }}</p>
+            <div class="popup__content" style="display: flex; justify-content: center; gap: 20px">
+                <button onclick="answer('yes')" type="submit" style="background-color: transparent; color:black">Подтвердить</button>
+                <button onclick="answer('no')" type="submit" style="background-color: transparent; color:black">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="stores__block">
+    <div class="stores__header">
+        <h4>Наши магазины</h4>
+        <button onclick="answer('')">Обновить информацию</button>
+    </div>
+    <div class="stores__footer">
+        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?
+um=constructor{{ map_code }}&amp;width=600&amp;height=500&amp;lang=ru_RU&amp;scroll=true"></script>
+    </div>
+</div>
+
+
+<script>
+    function answer(ans){
+        document.cookie = 'answer =' + ans;
+        location.reload();
+    }
+    console.log(document.cookie)
+    if ("{{ answer }}" !== 'yes' && "{{ answer }}" !== 'no') {
+        const curentPopup = document.getElementById('popup6');
+        document.addEventListener('DOMContentLoaded', function () {
+            popupOpen(curentPopup);
+        }, false)
+    }
+</script>
+{% endblock %}

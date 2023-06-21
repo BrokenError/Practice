@@ -91,6 +91,15 @@ a.text {
     color: rgba(1, 1, 1, 1)
 }
 
+.popup__block{
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    opacity: 0.8;
+    background-color: #DD914B;
+    border-radius: 20px;
+    padding: 20px 40px;
+}
 
 .modal-signin-selected{
     color: black;

@@ -1036,3 +1036,15 @@ input[type='radio'] {display: none}
     flex-direction: column;
     gap: 20px;
 }
+
+.stores__block{
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.stores__header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
