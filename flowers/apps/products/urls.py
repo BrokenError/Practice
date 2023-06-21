@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from apps.products.views import about_us, ShowReviewsView, ShowCommentsView, grade_product_view, AddReviews, \
-    AddComments, delete_review, delete_comment, change_comment_view, change_review_view
+    AddComments, delete_review, delete_comment, change_comment_view, change_review_view, our_stores
 from apps.user.views import LoginUser
 
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path('aboutus/', about_us, name='about'),
     path('catalog/', include('apps.catalog.urls')),
     path('user/', include('apps.user.urls')),
+    path('our-stores/', our_stores, name='our_stores'),
     path('reviews/<slug:prod_slug>/', ShowReviewsView.as_view(), name='product'),
     path('comments/<slug:prod_slug>/', ShowCommentsView.as_view(), name='product_comments'),
     path('add-review/<int:pk>', AddReviews.as_view(), name='review'),
