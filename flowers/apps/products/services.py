@@ -1,9 +1,12 @@
+import requests
+from bs4 import BeautifulSoup
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404
 
 from apps.cart.forms import CartAddProductForm
 from apps.orders.models import Order
 from apps.products.models import Products, Rating
+from apps.products.forms import LoginUserForm
 
 
 def base_context(self, context):
@@ -60,3 +63,26 @@ def change_reply_comment(product_id, check_id, model, form, comment_id):
     form.save(commit=False)
     result = change_writes(model, check_id, product_id).filter(comment_id=comment_id)
     result.update(text=form.cleaned_data['text'])
+
+
+def show_our_stores(answer, ip):
+    data = {'Rostov-on-Don': '%3A7187d1900e8f6fb609fd28593c8d2689135091c7e8c6aeb846b43b29deaa3210',
+            'Moscow': '%3A6ba45ccc3778f11ab04a791350f71a03b7c87332aab7ed5b3d57470f564adbee',
+            'Voronesh': '%3A1688495215b83856fbb37d8a1a91c4edc25e1d6a237d6933c11312a6ab6ea2f1',
+            'Volgograd': '%3A28fcedf564921587da2e057ae0884202359b077cea124b0b68941958eeb941f3',
+            'country': '%3A6a027cc11bee21604b8a97e648e09535306806441f0b71ec2a00e67d522cc289'}
+    page = requests.get(f'https://check-host.net/ip-info?host={ip}')
+    soup = BeautifulSoup(page.text, 'html.parser')
+
+    location = soup.findAll('table', class_='hostinfo result')
+    data_user = str(location[1].text).replace('\n', ' ').split('  ')
+    country = data_user[10]
+    city = data_user[15]
+    if not answer or f"{city}" not in data.keys():
+        map_code = data['country']
+    else:
+        map_code = data[f"{city}"]
+    context = {'title': 'Наши магазины', 'form': LoginUserForm, 'ip': ip, 'location': f'{country} {city}',
+               'map_code': map_code, 'answer': answer}
+    return context
+

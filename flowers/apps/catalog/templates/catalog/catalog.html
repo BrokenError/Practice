@@ -63,7 +63,7 @@
                             </form>
                         </div>
                         {% else %}
-                            <a href="#popup" class="popup-link">
+                            <a href="#popup" class="popup-link" style="display:flex; align-items: center">
                                 <button class="btn-catalog">В корзину</button></a>
                         {% endif %}
                         </div>
@@ -78,11 +78,12 @@
                     </div>
                 </div>
             {% endif %}
+            </div>
+            {% include 'catalog/paginator.html' with page=posts %}
         {% empty %}
                 <p style="margin: 0 auto;">ЗДЕСЬ ПОКА НИЧЕГО НЕТ</p>
         {% endfor %}
     </div>
-    {% include 'catalog/paginator.html' with page=posts %}
 <script type="text/javascript">
     function destroy() {
         return confirm("Bы уверены, что хотите уничтожить свой аккаунт?");

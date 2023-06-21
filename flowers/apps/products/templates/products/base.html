@@ -20,7 +20,7 @@
             <ul class="nav-menu-context">
                 <li><a href="{% url 'about' %}">О нас</a></li>
                 <li><a href="{% url 'magazine_catalog' %}">Каталог</a></li>
-                <li><a href="">Доставка и оплата</a></li>
+                <li><a href="{% url 'our_stores' %}">Наши магазины</a></li>
             </ul>
         </nav> 
         <ul class="header_links">
@@ -56,8 +56,8 @@
             <div id="popup" class="popup">
                 <div class="popup__body">
                     <div class="popup__content">
-                        <div class="modal-container__signin">
-                            <a href="" class="popup__close" style="margin:40px; font-size: 22px;">X</a>
+                        <div class="modal-container__signin" style="margin-top: 100px; gap: 30px">
+                            <a href="" class="popup__close" style="margin:100px 40px; font-size: 22px;">X</a>
                             <div class="modal-signin">
                                 <a href="#popup" class="popup-link modal-signin-selected">Вход</a>
                                 <a href="{% url 'register' %}" class="popup-close">Регистрация</a>

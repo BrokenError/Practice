@@ -4,10 +4,12 @@ from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = environ.get('SECRET_KEY')
-DEBUG = int(environ.get('DEBUG', default=0))
-ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS').split(' ')
-
+# SECRET_KEY = environ.get('SECRET_KEY')
+# DEBUG = int(environ.get('DEBUG', default=0))
+# ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS').split(' ')
+SECRET_KEY = 'django-insecure-2r^fmd(s#%!rvubk^#(^fjma1+dvc)1sz)6#6v9@05g*!yh6n('
+DEBUG = True
+ALLOWED_HOSTS = ['*']
 
 CART_SESSION_ID = 'cart'
 
@@ -42,7 +44,7 @@ ROOT_URLCONF = 'flowers.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,11 +66,16 @@ WSGI_APPLICATION = 'flowers.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': environ.get('DATABASE_NAME'),
-        'USER': environ.get('DATABASE_USER'),
-        'PASSWORD': environ.get('DATABASE_PASSWORD'),
-        'HOST': environ.get('DATABASE_HOST'),
-        'PORT': environ.get('DATABASE_PORT'),
+        # 'NAME': environ.get('DATABASE_NAME'),
+        # 'USER': environ.get('DATABASE_USER'),
+        # 'PASSWORD': environ.get('DATABASE_PASSWORD'),
+        # 'HOST': environ.get('DATABASE_HOST'),
+        # 'PORT': environ.get('DATABASE_PORT'),
+        'NAME': 'magazine',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
