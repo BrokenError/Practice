@@ -17,4 +17,3 @@ class Categories(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
         ordering = ['-date']
-

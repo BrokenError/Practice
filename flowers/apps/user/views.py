@@ -27,7 +27,6 @@ class RegisterUser(CreateView):
     success_url = ""
 
     def form_valid(self, form):
-        print(form)
         form.save()
         return super(RegisterUser, self).form_valid(form)
 

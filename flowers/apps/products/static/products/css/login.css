@@ -94,9 +94,10 @@ a.text {
 .popup__block{
     display: flex;
     gap: 20px;
+    border: #C1D1B0 1px solid;
     flex-direction: column;
     opacity: 0.8;
-    background-color: #DD914B;
+    background-color: cornsilk;
     border-radius: 20px;
     padding: 20px 40px;
 }

@@ -6,8 +6,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = environ.get('SECRET_KEY')
 DEBUG = int(environ.get('DEBUG', default=0))
-ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS').split(' ')
-
+ALLOWED_HOSTS = [environ.get('ALLOWED_HOSTS')]
 
 CART_SESSION_ID = 'cart'
 

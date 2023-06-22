@@ -7,23 +7,92 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
 <div class="main">
-    <h2>О нас</h2>
-    <div class="about-preview">
-        <p>
-
-        </p>
-    </div>
-    <div class="about-header">
-        <div>
-
+    <div style="gap: 100px" class="about_us">
+        <div class="about__header">
+            <h4 style="color: #8c8c8c; opacity: 0.7">НАСЧЕТ НАС</h4>
+            <h2 style="font-weight: 500">Это место особенное ...</h2>
         </div>
-
+        <div class="about-preview">
+            <div class="about-preview__left">
+                <h3 style="font-weight: 400; font-family: 'Playfair Display', serif !important;">
+                    Мы cоздаем индивидуальные букеты и игрушки для наших покупателей</h3>
+                <a href="#text"><button style="width: 200px; height: 40px; background-color: #C1D1B0; border-radius: 5px;
+                color: white;">Далее</button></a>
+            </div>
+            <div class="about-preview__right">Из-за своего командного положения во время Второй мировой войны Форт-Хаус
+                использовался военными в качестве наблюдательного пункта, и даже крыша была укреплена для защиты
+                от воздушного нападения двумя футами из бетона, что сделало это бомбоубежище от вражеских самолетов.
+                Сент-Моус с его исторической гаванью, каменными бассейнами и песчаными пляжами является идеальным местом
+                для отдыха в Корнуолле, а отель Fort House - идеальное место для проживания.
+            </div>
+        </div>
     </div>
-    <div class="about-1service"></div>
-    <div class="about-2service"></div>
-    <div class="about-3service"></div>
-    <div class="about-4service">
-        <a name="deliv">h</a>
-        gfg</div>
+    <div class="about-header about_us">
+        <div>
+            <p class="p-text"><a id="text"></a>
+                </p>
+        </div>
+        <div class="about-body">
+            <div class="about-header-image"><img src="{% static 'products/img/bouquets/about_us_bouquets.jpg' %}" alt=""></div>
+            <div class="about-header-text">Праздник сердец <br>
+                случается тогда,<br>когда лучшие<br>чувства на свете<br>окутаны<br>
+                ароматами<br>любимых цветов и<br>красотой момента<br>здесь и сейчас.</div>
+        </div>
+    </div>
+    <div class="about-avantages__block about_us">
+        <div style="display: flex; flex-direction: column; gap: 30px">
+            <p class="p-text">Наши преимущества</p>
+            <p style="text-align: center; font-size: 20px; font-weight: lighter">Каждый день мы создаем и экспериментируем,
+                чтобы<br>сделать наших клиентов счастливыми</p>
+        </div>
+        <div class="about-avantages__body">
+            <div class="about-advant__block" id="about-advant1">
+                <div class="adv-num"><i class="fa-solid fa-1"></i></div>
+                <div class="advant-block">
+                    <h6>Всегда свежие цветы</h6>
+                    <p>Наши букеты будут вас радовать как минимум полторы недели</p>
+                </div>
+            </div>
+            <div class="about-advant__block" id="about-advant2">
+                <div class="adv-num"><i class="fa-solid fa-2"></i></div>
+                <div class="advant-block">
+                    <h6>Быстрая доставка</h6>
+                    <p>Мы доставляем букеты в течение 3 часов после заказа</p>
+                </div>
+            </div>
+            <div class="about-advant__block" id="about-advant3">
+                <div class="adv-num"><i class="fa-solid fa-3"></i></div>
+                <div class="advant-block">
+                    <h6>Талантливые флористы</h6>
+                    <p>Все наши флористы имеют многолетний опыт работы и хороший вкус</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="about_us">
+        <p class="p-text">4 шага к красивому букету</p>
+        <div class="payment__blocks">
+            <div class="payment-block">
+                <div class="payment-num"><i class="fa-solid fa-bag-shopping"></i></div>
+                Заказ
+                <p class="payment-p">Положите понравившийся букет в корзину.</p>
+            </div>
+            <div class="payment-block">
+                <div class="payment-num"><i class="fa-solid fa-user"></i></div>
+                Подтверждение
+                <p class="payment-p">Оператор связывается с вами для подтверждения заказа</p>
+            </div>
+            <div class="payment-block">
+                <div class="payment-num"><i class="fa-solid fa-wallet"></i></div>
+                Оплата
+                <p class="payment-p">Оплатите онлайн на сайте или при получении.</p>
+            </div>
+            <div class="payment-block">
+                <div class="payment-num"><i class="fa-solid fa-car"></i></div>
+                <p>Доставка</p>
+                <p class="payment-p">Курьер позвонит перед выездом и доставит букет вовремя.</p>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

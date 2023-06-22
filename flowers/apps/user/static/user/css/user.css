@@ -29,8 +29,6 @@ p{
 }
 
 .user{
-
-    /* max-width: 1200px; */
     display: flex;
     flex-direction: row;
     gap:60px;
@@ -50,7 +48,6 @@ p{
 .user-links li{
     padding: 10px;
     text-align: left;
-    /* border-radius: 5px; */
 }
 
 .user-links li:hover{

@@ -9,7 +9,6 @@ p{
 body{
     margin: 0;
     background-color: white;
-    /* background-color: #EBD5B5; */
     display: flex;
     flex-direction: column;
     gap:70px;
@@ -67,7 +66,6 @@ a:hover{
 ul li a:hover{
     transform: scale(1.05);
     color:#DD914B;
-    /* font-weight: 500; */
 }
 
 .a_button{
@@ -569,7 +567,7 @@ form{
 .btn-catalog{
     height: 40px;
     font-size: 20px;
-    padding: 0px 10px;
+    padding: 0 10px;
 }
 
 .none_a{
@@ -1011,10 +1009,6 @@ input[type='radio'] {display: none}
     width: 500px;
 }
 
-.add-comments button{
-    /*height: 40px;*/
-}
-
 .delete-write{
     background-color: transparent;
     color: black;
@@ -1047,4 +1041,138 @@ input[type='radio'] {display: none}
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.about-preview{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.about__header{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.p-text{
+    font-family: 'sans-serif';
+    font-weight: 200;
+    text-align: center;
+    font-size: 30px
+}
+
+.about_us{
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    width: 1100px;
+}
+
+.about-preview__left{
+    display: flex; flex-direction: column;
+    gap: 30px;
+    max-width: 400px;
+}
+.about-preview__right{
+    max-width: 500px;
+}
+
+.about-body{
+    align-items: center;
+    line-height: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.about-header-image img{
+    max-width: 500px;
+    max-height: 600px;
+}
+
+.about-header-text{
+    font-size: 16px;
+    text-align: center;
+    width: 500px;
+}
+
+.about-avantages__block{
+    display: flex;
+    flex-direction: column;
+}
+
+.about-avantages__body{
+    gap: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.about-advant__block{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.advant-block{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.adv-num{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    min-width: 80px;
+    border-radius: 50%;
+    background-color: #C1D1B0;
+}
+
+.adv-num i{
+    font-weight: 100;
+    font-size: 35px;
+}
+
+.advant-block h6{
+
+}
+
+.advant-block p{
+    font-weight: 200;
+    font-size: 14px;
+}
+.payment__blocks{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: space-between;
+}
+
+.payment-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.payment-num{
+    text-align: center;
+    min-width: 102px;
+    padding: 20px;
+    border-radius: 50%;
+    border: #C1D1B0 1px solid;
+    font-size: 60px;
+}
+
+.payment-p{
+    text-align: center;
+    font-weight: 200;
+    font-size: 14px;
 }
