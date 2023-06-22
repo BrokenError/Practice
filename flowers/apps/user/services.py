@@ -14,9 +14,8 @@ def reply_comment(form, user, pk_product, pk_comment):
         form.product = product
         form.comment = comment
         form.save()
-        print("ok")
     else:
-        print("no")
+        print('error')
 
 
 def delete_user(user_id):

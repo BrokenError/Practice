@@ -1,5 +1,3 @@
-import requests
-from bs4 import BeautifulSoup
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.template.defaulttags import register

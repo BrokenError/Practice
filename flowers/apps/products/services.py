@@ -37,7 +37,6 @@ def fill_form(form, product, user):
         forme.user = user
         forme.product = product
         forme.save()
-    return print(' ')
 
 
 def change_writes(model, check_id, product_id):
@@ -85,4 +84,3 @@ def show_our_stores(answer, ip):
     context = {'title': 'Наши магазины', 'form': LoginUserForm, 'ip': ip, 'location': f'{country} {city}',
                'map_code': map_code, 'answer': answer}
     return context
-
